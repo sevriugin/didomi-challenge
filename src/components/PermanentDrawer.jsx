@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import TocIcon from '@material-ui/icons/Toc';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import menuOptions from '../menuOptions';
+
+const iconMap = {
+  addBoxIcon: () => <AddBoxIcon />,
+  tocIcon: () => <TocIcon /> 
+}
 
 const drawerWidth = 240;
 
@@ -30,51 +37,51 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
-  },
 }));
 
 export default function PermanentDrawer({selected = 0, onClick, children}) {
   const classes = useStyles();
 
+  useEffect(()=> {
+    console.log('PermanentDrawer', selected);
+    
+    const navEvent = new PopStateEvent('popstate');
+    window.dispatchEvent(navEvent);
+
+  },[selected])
+
+  const handleClick = (event, index) => {
+
+    event.preventDefault();
+    window.history.pushState({},'', menuOptions[index].value);
+    
+    onClick(index);
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
+
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            {selected === 0 ? 'Add new Consent' : 'Consents'}
+            {menuOptions[selected].title}
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
+
+      <Drawer className={classes.drawer} variant="permanent" classes={{ paper: classes.drawerPaper, }} anchor="left" >
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['New', 'Collected'].map((text, index) => (
-            <ListItem onClick={() => onClick(index)} button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <AddBoxIcon /> : <TocIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+          {menuOptions.map((item, index) => (
+            <ListItem onClick={(event) => handleClick(event, index)} button key={item.id}>
+              <ListItemIcon>{iconMap[item.icon]()}</ListItemIcon>
+              <ListItemText primary={item.label} />
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {children[selected]}
-      </main>
     </div>
   );
 }

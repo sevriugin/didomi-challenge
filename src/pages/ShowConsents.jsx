@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   table: {
-    minWidth: 650,
+    minWidth: 400,
   },
 }));
 
@@ -74,6 +74,7 @@ const ShowConsents = ({consents, fetchConsents, reload}) => {
 
     return (
         <div>
+            <Grid container justify = "center" style={{marginLeft: "250px", width: "880px"}}> 
             <TableContainer component={Paper}>
 
                 <Table className={classes.table} aria-label="collected consents">
@@ -103,13 +104,14 @@ const ShowConsents = ({consents, fetchConsents, reload}) => {
                 </Table>
 
             </TableContainer>
-
-    
             <Grid container justify = "center">
                 <div className={classes.root}>
                     <Pagination count={count} page={page} onChange={handleChange} />
                 </div>
             </Grid>
+
+            </Grid>
+            
             
         </div>
     );
