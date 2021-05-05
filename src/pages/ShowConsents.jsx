@@ -30,6 +30,13 @@ const PAGE_SIZE = 2;
 
 const mapStateToProps = (state) => ({ consents: state.consents, reload: state.reload });
 
+/**
+ *  ShowConsents page component - Material design ``Table`` with pagination  
+ * 
+ *  Uses ``fetchConsents`` action to load new consents from API,
+ *      ``reload`` setting to true in Redux store will forse reload  
+ *  
+ */
 const ShowConsents = ({consents, fetchConsents, reload}) => {
 
     const classes = useStyles();
@@ -73,47 +80,47 @@ const ShowConsents = ({consents, fetchConsents, reload}) => {
     }
 
     return (
-        <div>
+        <React.Fragment>
             <Grid container justify = "center" style={{marginLeft: "250px", width: "880px"}}> 
-            <TableContainer component={Paper}>
 
-                <Table className={classes.table} aria-label="collected consents">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell align="right">Consent given for</TableCell>
-                        </TableRow>
-                    </TableHead>
+                <TableContainer component={Paper}>
 
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.email}>
-                                <TableCell >
-                                    {row.name}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.email}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {row.details}
-                                </TableCell>
+                    <Table className={classes.table} aria-label="collected consents">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell align="right">Consent given for</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
 
-            </TableContainer>
-            <Grid container justify = "center">
-                <div className={classes.root}>
-                    <Pagination count={count} page={page} onChange={handleChange} />
-                </div>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.email}>
+                                    <TableCell >
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.email}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {row.details}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+                <Grid container justify = "center">
+                    <div className={classes.root}>
+                        <Pagination count={count} page={page} onChange={handleChange} />
+                    </div>
+                </Grid>
+
             </Grid>
 
-            </Grid>
-            
-            
-        </div>
+        </React.Fragment>
     );
 };
 

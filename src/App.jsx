@@ -23,20 +23,35 @@ const App = () => {
     const [selected, setSelected] = useState(0);
     const classes = useStyles();
 
-    useEffect(() => {
-        console.log('App', window.location.pathname);
+    const findPath = (path) => menuOptions.findIndex(item => path === item.value); 
 
-        const index = menuOptions.findIndex(item => window.location.pathname === item.value);
-        console.log('App', index);
-        if (index >= 0) {
-            setSelected(index);
-        } else {
+    useEffect(() => {
+
+        const onLocationChange = () => {
+            
+            const index = findPath(window.location.pathname);
+
+            if (index > 0) {
+                setSelected(index); 
+            }
+
+            return index >= 0;
+        }
+        
+        if (!onLocationChange()) {
             setSelected(0);
             window.history.pushState({},'', menuOptions[0].value);
             
             const navEvent = new PopStateEvent('popstate');
             window.dispatchEvent(navEvent);
         }
+
+        window.addEventListener('popstate', onLocationChange);
+
+        return () => {
+            window.removeEventListener('popstate', onLocationChange);
+        }
+
        
     }, [])
 

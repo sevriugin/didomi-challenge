@@ -39,7 +39,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PermanentDrawer({selected = 0, onClick, children}) {
+/**
+ *  Material design Permament Drawer component 
+ * 
+ *  Uses ``menuOptions`` to display navigation menu and 
+ *    windows event to change current link
+ * 
+ */
+export default function PermanentDrawer({selected, onClick}) {
   const classes = useStyles();
 
   useEffect(()=> {

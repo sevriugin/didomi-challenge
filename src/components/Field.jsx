@@ -10,6 +10,18 @@ const TextFieldConfig = {
     'email': createConfig('email', 'Email', 'email', 'Enter User Email', 'Invalid email address'),
 }
 
+/**
+ * 
+ *  Wrapper component for the Material Design ``TextFiels``.
+ * 
+ *  Provides TextFieldConfiguration for ``name`` and ``email``.
+ * 
+ *  Use ``set(key: String, value: String)`` callback to change state 
+ *      of the parent User object 
+ * 
+ *  Manages state for ``TextFiels``
+ * 
+ */
 const Field = ({type, set, isEmpty}) => {
 
     const [value, setValue] = useState('');

@@ -17,6 +17,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+/**
+ * 
+ *  Group of check boxes to collect consents. 
+ * 
+ *  Uses ``set(key: Symbol, value: boolean)`` callback to change sate of User 
+ *      object in parent component.
+ * 
+ *  Manages states for ``Checkbox`` 
+ * 
+ */
 const CheckBoxGroup = ({set, isEmpty}) => {
     const classes = useStyles();
 

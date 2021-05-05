@@ -1,5 +1,9 @@
 import {useEffect, useState} from 'react';
 
+/**
+ *  Renders ``childern`` props if current ``window.location.pathname`` is equal
+ *  to ``path``, otherwise render ``null``
+ */
 const Route = ({path, children}) => {
 
     const [pathname, setPathname] = useState(window.location.pathname);

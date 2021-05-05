@@ -13,6 +13,12 @@ import CheckBoxGroup from '../components/CheckBoxGroup';
 
 import User from '../models/User';
 
+/**
+ *  Give consent page component 
+ *  
+ *  Uses ``Field`` and ``CheckBoxGroup``
+ *  
+ */
 const GiveConsent = ({ needReload }) => {
 
     const user = useRef(User.newEmpty());
@@ -25,6 +31,14 @@ const GiveConsent = ({ needReload }) => {
     const [isEmpty, setIsEmpty] = useState(true);
     const [isValid, setIsValid] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+
+    const goTo = (path) =>  {
+
+        window.history.pushState({},'', path)
+
+        const navEvent = new PopStateEvent('popstate');
+        window.dispatchEvent(navEvent);
+    };
 
     const set = (key, value) => {
 
@@ -60,6 +74,8 @@ const GiveConsent = ({ needReload }) => {
         
             needReload();
             console.log('New consent added', response);
+
+            goTo('/consents');
 
         } catch (e) {
             console.log(e.message);
